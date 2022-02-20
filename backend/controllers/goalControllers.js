@@ -8,6 +8,8 @@ const getGoals = (req,res)=>{
 // @route : POST /api/goals
 // @access : Private
 const setGoal = (req,res)=>{
+    console.log(req.body);
+
     res.status(200).json({ message: 'Create goals' });
 }
 // @desc : UPDATE goals
