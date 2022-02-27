@@ -20,7 +20,11 @@ const setGoal =asyncHandler(async (req,res)=>{
         throw new Error('please fill in the text ...')
     }
 
-    res.status(200).json({ message: 'Create goals' });
+    const goals = await goal.create({
+        text: req.body.text
+    });
+
+    res.status(200).json(goals);
 })
 // @desc : UPDATE goals
 // @route : PUT /api/goals/:id
