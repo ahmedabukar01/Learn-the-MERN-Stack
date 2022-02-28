@@ -29,7 +29,7 @@ const registerUser = asyncHandler(async (req,res)=>{
     const user = await User.create({
         name,
         email,
-        password
+        password: hashedPassword,
     });
 
     if(user){
@@ -57,7 +57,6 @@ const loginUser =asyncHandler(async (req,res)=>{
     
     // user matches
     if(user && (await bcrypt.compare(password, user.password))){
-
         res.json({
             id: user.id,
             name: user.name,
@@ -65,7 +64,7 @@ const loginUser =asyncHandler(async (req,res)=>{
         })
 
     } else{
-        res.status(400).json({user})
+        res.status(400)
         throw new Error('invalid credentials ...');
     }
 })
