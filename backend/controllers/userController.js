@@ -1,12 +1,26 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const user = require('../models/userModel');
+const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 
 // @desc  Register user
 // @api   POST api/users
 // @access  public
 const registerUser = asyncHandler(async (req,res)=>{
+    const {name, email, password} = req.body;
+
+    if(!name || !email || !password){
+        res.status(400);
+        throw new Error('please fill all the fields ...')
+    }
+
+    // chech if user exists
+    const userExist = await User.findOne({email});
+    if(userExist){
+        res.status(400);
+        throw new Error('user already exists!');
+    }
+
     res.json({message: 'register user'})
 })
 
