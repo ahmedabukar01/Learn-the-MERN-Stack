@@ -21,14 +21,53 @@ const registerUser = asyncHandler(async (req,res)=>{
         throw new Error('user already exists!');
     }
 
-    res.json({message: 'register user'})
+    // password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password,salt);
+
+    // new user 
+    const user = await User.create({
+        name,
+        email,
+        password
+    });
+
+    if(user){
+        res.status(201)
+        res.json({
+            id: user.id,
+            name: user.name,
+            email: user.email
+        })
+    } else{
+        res.status(400);
+        throw new Error('invalid user data')
+    }
+
 })
 
 // @desc  Authenticate user
 // @api   POST api/users/login
 // @access  public
 const loginUser =asyncHandler(async (req,res)=>{
-    res.json({message: 'Login user'})
+    const {email,password} = req.body;
+
+    const user = await User.findOne({email})
+
+    
+    // user matches
+    if(user && (await bcrypt.compare(password, user.password))){
+
+        res.json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        })
+
+    } else{
+        res.status(400).json({user})
+        throw new Error('invalid credentials ...');
+    }
 })
 
 // @desc  Get user Data
