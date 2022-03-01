@@ -9,14 +9,14 @@ const protect = asyncHandler(async (req,res,next)=>{
         
         try{
             // Get token from header
-            token = req.headers.authorization.split('')[1];
+            token = req.headers.authorization.split(' ')[1];
+            console.log(req.headers.authorization)
 
             // verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             // Get user from the token
-            req.user = await User.findOne(decoded.id).select('-password')
-
+            req.user = await User.findById(decoded.id).select('-password')
             next();
 
         } catch(err){
@@ -32,3 +32,5 @@ const protect = asyncHandler(async (req,res,next)=>{
         throw new Error('no authorzation, no token')
     }
 })
+
+module.exports = { protect };
