@@ -75,7 +75,13 @@ const loginUser =asyncHandler(async (req,res)=>{
 // @api   GET api/users/me
 // @access  public
 const getMe =asyncHandler(async (req,res)=>{
-    res.json({message: 'Get my Data'})
+    const {_id, name, email} = await User.findById(req.user.id);
+
+    res.status(200).json({
+        id: _id,
+        name,
+        email,
+    })
 })
 
 // Generate jwt 
