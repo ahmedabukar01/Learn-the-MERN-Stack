@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req,res)=>{
 
 })
 
-// @desc  Authenticate user
+// @desc  Authenticate user 
 // @api   POST api/users/login
 // @access  public
 const loginUser =asyncHandler(async (req,res)=>{
