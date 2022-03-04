@@ -6,7 +6,7 @@ const goal = require('../models/goalModel');
 // @route : GET /api/goals
 // @access : Private
 const getGoals = asyncHandler(async (req,res)=>{
-    const goals = await goal.find();
+    const goals = await goal.find({user: req.user.id});
 
     res.status(200).json(goals);
 })
@@ -21,7 +21,8 @@ const setGoal =asyncHandler(async (req,res)=>{
     }
 
     const goals = await goal.create({
-        text: req.body.text
+        text: req.body.text,
+        user: req.user.id
     });
 
     res.status(200).json(goals);
