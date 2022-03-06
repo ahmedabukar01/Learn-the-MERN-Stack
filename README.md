@@ -1,2 +1,2 @@
-# Learn-the-MERN-Stack-Rest-api
+# Learn-the-MERN-Stack
 complete mernstack, Restapi, Jsonwebtoken Authentications, redux, More
