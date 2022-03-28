@@ -1,5 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import { FaGlasses } from 'react-icons/fa';
 import authService from './authService';
 
 // get user from localStorage
